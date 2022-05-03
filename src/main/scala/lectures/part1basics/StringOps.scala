@@ -38,8 +38,12 @@ object StringOps extends App{
   val speed = 1.2f
   val myth = f"$name can eat $speed%2.2f burgers per minute" //2.2 stands for 2 characters and 2 decimals
 
-  
+
   //raw-interpolator
+  println(raw"This is a \n newline") //printed literally
+  //ignored escaped characters inside the string
+  val escaped = "This is a \n newline"
+  println(raw"$escaped")
 
 
 
