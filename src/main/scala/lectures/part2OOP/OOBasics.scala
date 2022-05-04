@@ -1,13 +1,27 @@
 package lectures.part2OOP
 
+import java.io.Writer
+
 object OOBasics extends App {
 
   //instantiate person class using new keyword
   val person = new Person("Connie", 22)
-  println(person)
+//  println(person)
   println(person.age)
   person.greet("Robyn")
 
+  val austen =  new Writer("Jane", "Austen", 1775)
+  println(austen.fullName)
+
+  val senseAndSensibility = new Novel("Sense and Sensibility", 1811, austen)
+  println(senseAndSensibility.authorAge())
+
+  println(senseAndSensibility.isWrittenBy
+  )
+
+
+  val counter = new Counter
+  println(counter.inc)
 }
 
 //CONSTRUCTORS
@@ -32,5 +46,39 @@ class Person(name: String, val age: Int) //class constructor
 
 
 //EXERCISES
-class Novel(firstName: String, surname: String, year: Int)
+class Writer( val firstName: String = " ", val surname: String = " ", val birthYear: Int = 0){
+  def fullName: String =
+    s"$firstName $surname"
+}
 
+class Novel(name: String, yearOfRelease: Int, author: Writer){
+
+  def authorAge(): Int = {
+    yearOfRelease - author.birthYear
+  }
+
+  def isWrittenBy: String = {
+    s"$name is written by ${author.fullName}"
+  }
+
+  def copy(newYear: Int): Novel = {
+    val newNovel = new Novel(name, newYear, author)
+    newNovel
+  }
+}
+
+class Counter(val count: Int = 0) {
+  def inc = new Counter(count + 1) //returning a new count because of immutability of objects. Instances are fixed so cannot
+  //be modified inside. New instance must be made instead.
+  def dec = new Counter(count -1)
+
+  def inc(n: Int): Counter = {
+    if (n <= 0) this
+    else inc.inc(n-1)
+  }
+  def dec(n: Int): Counter = {
+    if (n <= 0) this
+    else dec.dec(n-1)
+  }
+
+}
